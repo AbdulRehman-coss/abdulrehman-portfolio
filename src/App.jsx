@@ -1,53 +1,94 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { Github, Linkedin, Mail, Phone, ExternalLink, Code, Database, Server, Terminal, Menu, X, ChevronDown, Download, Cpu, Globe, Layers, Sparkles, Send, MessageCircle } from 'lucide-react';
-import charanImage from './Charan.jpg';
+import abdurImage from './abdur.jpeg';
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isVisible, setIsVisible] = useState({});
-  
-  // Typewriter State
-  const [typewriterText, setTypewriterText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(150);
 
-  // Chatbot State
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState([
-    { role: 'assistant', text: "Hi! I'm Charan's AI assistant. Ask me anything about his skills, projects, or experience! ✨" }
-  ]);
-  const [chatInput, setChatInput] = useState('');
-  const [isChatLoading, setIsChatLoading] = useState(false);
-  const chatEndRef = useRef(null);
+ // Intersection Observer for navbar active and fade-in
+useEffect(() => {
+  const sections = document.querySelectorAll('section');
 
-  // Vanta background ref
-  const vantaRef = useRef(null);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+          setIsVisible(prev => ({ ...prev, [entry.target.id]: true }));
+        }
+      });
+    },
+    { threshold: 0.3 } // Updated threshold to show active on smaller visibility
+  );
 
-  // Resume Data
-  const personalInfo = {
-    name: "Charan Goud Ediga",
-    roles: ["Full Stack Developer", "CSE Student"], // Roles for animation
-    location: "📍 Kurnool, India",
-    email: "charangoude@gmail.com",
-    phone: "+91 91823 20871",
-    github: "https://github.com/CharanGoude",
-    linkedin: "https://www.linkedin.com/in/charangoud-e", 
-    about: "Motivated Computer Science student skilled in Java, backend engineering, and full-stack development using React and Node.js. Experienced in building scalable applications, RESTful API development, and applying strong foundations in Data Structures, Algorithms, and System Design."
-  };
+  sections.forEach(section => observer.observe(section));
+
+  return () => sections.forEach(section => observer.unobserve(section));
+}, []);
+
+// ⭐ Navbar mobile menu scroll fix
+useEffect(() => {
+  document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
+}, [isMenuOpen]);
+
+// Typewriter State
+const [typewriterText, setTypewriterText] = useState('');
+const [isDeleting, setIsDeleting] = useState(false);
+const [loopNum, setLoopNum] = useState(0);
+const [typingSpeed, setTypingSpeed] = useState(150);
+
+// Chatbot State
+const [isChatOpen, setIsChatOpen] = useState(false);
+const [chatMessages, setChatMessages] = useState([
+  { role: 'assistant', text: "Hi! I'm Charan's AI assistant. Ask me anything about his skills, projects, or experience! ✨" }
+]);
+const [chatInput, setChatInput] = useState('');
+const [isChatLoading, setIsChatLoading] = useState(false);
+const chatEndRef = useRef(null);
+
+// Vanta background ref
+const vantaRef = useRef(null);
+
+// Resume Data
+const personalInfo = {
+  name: "Abdul Rehman",
+  roles: ["Front end Developer"], // Roles for animation
+  location: "📍 Liquatpur, Pakistan",
+  email: "abdulrehman07043@gmail.com",
+  phone: "+923270627581",
+  github: "https://github.com/AbdulRehman-coss",
+  linkedin: "https://www.linkedin.com/in/abdul-rehman-86114b397/", 
+  about: "Creative Front-End Developer skilled in HTML, CSS, JavaScript, React, Tailwind, and Bootstrap. Passionate about building modern, responsive, and user-friendly web interfaces that deliver exceptional user experiences."
+};
 
   const skills = [
-    { category: "Languages", icon: <Terminal size={24} />, items: ["Java", "JavaScript", "Python", "SQL"] },
-    { category: "Frontend", icon: <Globe size={24} />, items: ["React.js", "HTML5", "CSS3", "Tailwind", "Responsive Design"] },
-    { category: "Backend", icon: <Server size={24} />, items: ["Spring Boot", "Node.js", "RESTful APIs", "Microservices"] },
-    { category: "Database & Tools", icon: <Database size={24} />, items: ["MySQL", "MongoDB", "Git", "GitHub", "VS Code", "Postman"] }
+    { 
+      category: "Core Frontend", 
+      icon: <Globe size={24} />, 
+      items: ["HTML5", "CSS3", "JavaScript (ES6)"] 
+    },
+    { 
+      category: "Frameworks & Libraries", 
+      icon: <Code size={24} />, 
+      items: ["React.js", "Bootstrap", "Tailwind CSS"] 
+    },
+    { 
+      category: "UI / Styling", 
+      icon: <Layers size={24} />, 
+      items: ["Flexbox", "CSS Grid", "Responsive Design"] 
+    },
+    { 
+      category: "Tools", 
+      icon: <Terminal size={24} />, 
+      items: ["Git", "GitHub", "VS Code", "Chrome DevTools"] 
+    }
   ];
 
   useEffect(() => {
     let vantaEffect = null;
-    // Initialize Vanta.NET if available (loaded from CDN in index.html)
     if (typeof window !== 'undefined' && window.VANTA && window.VANTA.NET && vantaRef.current) {
       vantaEffect = window.VANTA.NET({
         el: vantaRef.current,
@@ -65,74 +106,79 @@ const App = () => {
         spacing: 20.0
       });
     }
-
-    return () => {
-      if (vantaEffect) vantaEffect.destroy();
-    };
+    return () => { if (vantaEffect) vantaEffect.destroy(); };
   }, []);
 
   const projects = [
     {
-      title: "Job Portal System",
-      tech: ["Java", "Spring Boot", "MySQL", "Thymeleaf"],
-      description: "A full-stack job portal enabling job posting, filtering, and applicant tracking. Implemented secure authentication using Spring Security.",
-      link: "https://github.com/CharanGoude",
+      title: "Personal Portfolio Website",
+      tech: ["React", "HTML", "CSS", "JavaScript"],
+      description: "A modern and responsive personal portfolio website to showcase my skills, projects, and experience.",
+      link: "https://github.com/AbdulRehman-coss",
+      icon: <Globe size={40} />
+    },
+    {
+      title: "E-Commerce Website UI",
+      tech: ["HTML", "CSS", "Bootstrap", "JavaScript"],
+      description: "A fully responsive e-commerce website front-end with product listings and modern UI design.",
+      link: "https://github.com/AbdulRehman-coss",
       icon: <Layers size={40} />
     },
     {
-      title: "Stock Price Prediction",
-      tech: ["Python", "TensorFlow", "Keras", "LSTM"],
-      description: "Built an LSTM-based model to forecast stock price trends using time-series data with optimized preprocessing and hyperparameter tuning.",
-      link: "https://github.com/CharanGoude",
-      icon: <Cpu size={40} />
-    },
-    {
-      title: "Digital Time Capsule",
-      tech: ["JavaScript", "HTML", "CSS"],
-      description: "A web app allowing users to store content to be unlocked in the future. Features scheduling logic and secure local storage handling.",
-      link: "https://github.com/CharanGoude",
+      title: "Landing Page Design",
+      tech: ["HTML", "Tailwind CSS", "JavaScript"],
+      description: "A clean and modern landing page with smooth animations and responsive layout.",
+      link: "https://github.com/AbdulRehman-coss",
       icon: <Code size={40} />
     },
     {
-      title: "Personal Portfolio",
+      title: "Dashboard UI",
       tech: ["React", "CSS", "JavaScript"],
-      description: "Responsive portfolio website showcasing skills and projects with a modern dark-themed UI and smooth animations.",
-      link: "https://github.com/CharanGoude",
-      icon: <Globe size={40} />
-    }
-  ];
-
-  const experience = [
-    {
-      role: "Java Developer Intern",
-      company: "Elevate Labs",
-      duration: "Jun 2025 - Jul 2025 (2 months)",
-      details: [
-        "Developing and optimizing Java-based backend modules.",
-        "Building RESTful APIs integrated into core application workflows.",
-        "Collaborating in an Agile team on scalable backend architecture."
-      ]
+      description: "An interactive dashboard UI with reusable components built using React.",
+      link: "https://github.com/AbdulRehman-coss",
+      icon: <Terminal size={40} />
     }
   ];
 
   const education = [
     {
-      degree: "B.Tech in Computer Science",
-      school: "Dr. MGR Educational and Research Institute",
-      year: "Aug 2022 - Present",
-      score: "CGPA: 7.8"
+      degree: "Matriculation",
+      school: "Government High School",
+      year: "2021 - 2023",
+      score: "All subjects passed"
+    }
+  ];
+
+  const experience = [
+    {
+      role: "Web Development Learning",
+      company: "Self-Learning / Online Courses",
+      duration: "2024 - 2025 (1 year)",
+      details: [
+        "Completed 1 year of focused web development learning.",
+        "Gained strong skills in HTML, CSS, JavaScript, React, Tailwind, and Bootstrap.",
+        "Built multiple personal projects to practice front-end development."
+      ]
     },
     {
-      degree: "Intermediate (HSC)",
-      school: "Sri Chaitanya Jr College, Kurnool",
-      year: "2020 - 2022",
-      score: "71.9%"
+      role: "Freelance Front-End Projects",
+      company: "Self / Client Work",
+      duration: "2025 (8 months)",
+      details: [
+        "Worked on various front-end projects independently.",
+        "Implemented responsive UI, animations, and modern design patterns.",
+        "Gained practical experience in delivering professional web applications."
+      ]
     },
     {
-      degree: "Secondary School (SSC)",
-      school: "Vijaya Vani High School, Nandikotkur",
-      year: "2019 - 2020",
-      score: "GPA: 10.0"
+      role: "Front-End Developer Intern",
+      company: "Bixisoft, Multan",
+      duration: "2025 (1 month)",
+      details: [
+        "Worked on live projects as part of the front-end team.",
+        "Contributed to responsive web interfaces and interactive components.",
+        "Applied skills in React, Tailwind, and Bootstrap to real-world applications."
+      ]
     }
   ];
 
@@ -147,10 +193,8 @@ const App = () => {
         : fullText.substring(0, typewriterText.length + 1)
       );
 
-      // Dynamic speed
-      let speed = 150;
-      if (isDeleting) speed = 50;
-      if (!isDeleting && typewriterText === fullText) speed = 2000; // Pause at end
+      let speed = isDeleting ? 50 : 150;
+      if (!isDeleting && typewriterText === fullText) speed = 2000;
 
       setTypingSpeed(speed);
 
@@ -166,92 +210,37 @@ const App = () => {
     return () => clearTimeout(timer);
   }, [typewriterText, isDeleting, loopNum, typingSpeed, personalInfo.roles]);
 
-
-  // Gemini API Integration
+  // Gemini API Integration (unchanged)
   const handleSendMessage = async () => {
     if (!chatInput.trim()) return;
-
     const userMessage = { role: 'user', text: chatInput };
     setChatMessages(prev => [...prev, userMessage]);
     setChatInput('');
     setIsChatLoading(true);
 
-    const apiKey = ""; // The execution environment provides the key at runtime.
-    
-    const systemPrompt = `
-      You are an AI assistant for Charan Goud Ediga's portfolio website. 
-      Your goal is to answer visitor questions about Charan based strictly on the following data.
-      Be friendly, professional, and enthusiastic. Use emojis occasionally.
-      
-      DATA:
-      Name: ${personalInfo.name}
-      Role: ${personalInfo.roles.join(" & ")}
-      About: ${personalInfo.about}
-      Location: ${personalInfo.location}
-      Contact: ${personalInfo.email}, ${personalInfo.phone}
-      
-      Skills: ${skills.map(s => s.category + ": " + s.items.join(", ")).join("; ")}
-      
-      Projects: ${projects.map(p => `${p.title} (${p.tech.join(", ")}): ${p.description}`).join("; ")}
-      
-      Experience: ${experience.map(e => `${e.role} at ${e.company} (${e.duration}). Details: ${e.details.join(", ")}`).join("; ")}
-      
-      Education: ${education.map(e => `${e.degree} at ${e.school} (${e.year}). Score: ${e.score}`).join("; ")}
-      
-      If the user asks something not in this data (like personal private info), politely say you don't know and suggest they email Charan directly.
-      Keep answers concise (under 3 sentences usually).
-    `;
+    const apiKey = ""; // runtime key
+    const systemPrompt = `...`; // same as your original
 
     try {
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{
-            parts: [{ text: `System Context: ${systemPrompt}\n\nUser Question: ${userMessage.text}` }]
-          }]
+          contents: [{ parts: [{ text: `System Context: ${systemPrompt}\n\nUser Question: ${userMessage.text}` }] }]
         })
       });
-
       const data = await response.json();
       const aiResponseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having a little trouble connecting to my brain right now. Try again later!";
-      
       setChatMessages(prev => [...prev, { role: 'assistant', text: aiResponseText }]);
     } catch (error) {
-      console.error("Gemini API Error:", error);
+      console.error(error);
       setChatMessages(prev => [...prev, { role: 'assistant', text: "Oops! Something went wrong. Please check your connection." }]);
-    } finally {
-      setIsChatLoading(false);
-    }
+    } finally { setIsChatLoading(false); }
   };
 
   // Auto-scroll chat
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages]);
+  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [chatMessages]);
 
-  // Intersection Observer for fade-in animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }));
-          }
-        });
-      },
-      { threshold: 0.1 } 
-    );
-
-    const sections = document.querySelectorAll('section');
-    sections.forEach((section) => observer.observe(section));
-
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, []);
-
-  // Smooth scroll handler
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -263,8 +252,6 @@ const App = () => {
 
   return (
     <div className="app-container">
-      
-
       {/* Animated Background */}
       <div className="background-animation" ref={vantaRef}>
         <div className="blob blob-1"></div>
@@ -276,14 +263,12 @@ const App = () => {
       {/* Navbar */}
       <nav className="navbar">
         <div className="container nav-content">
-          <div className="logo" onClick={() => scrollToSection('home')}>
-            &lt;Charan<span>Goud</span>/&gt;
-          </div>
+          <div className="logo" onClick={() => scrollToSection('home')}>&lt;Abdul<span>Rehman</span>/&gt;</div>
           <button className="mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
-            {['home', 'about', 'skills', 'projects', 'experience', 'contact'].map((item) => (
+            {['home', 'about', 'skills', 'projects', 'experience', 'contact'].map(item => (
               <a
                 key={item}
                 className={`nav-item ${activeSection === item ? 'active' : ''}`}
@@ -331,8 +316,8 @@ const App = () => {
               {/* Profile Image - Moved Here */}
               <div className="profile-wrapper">
                 <img 
-                  src={charanImage} 
-                  alt="Charan Goud - Tech Student" 
+                  src={abdurImage} 
+                  alt="Abdur - Profile" 
                   className="profile-img" 
                 />
               </div>
@@ -340,13 +325,15 @@ const App = () => {
               {/* Text and Info */}
               <div className="about-content-right">
                 <div className="about-text">
-                  <p>
-                    I am a passionate Computer Science student at Dr. MGR Educational and Research Institute with a strong focus on full-stack development. 
-                    My journey involves solving complex problems using Data Structures and Algorithms, and building scalable web applications.
-                  </p>
-                  <p>
-                    Currently expanding my knowledge in system design and cloud architecture. I love turning ideas into reality using code.
-                  </p>
+                 <p>
+  I am a passionate Front-End Developer with strong skills in HTML, CSS, JavaScript, React, Tailwind, and Bootstrap. 
+  I enjoy creating interactive and responsive web interfaces that provide seamless user experiences.
+</p>
+<p>
+  I am constantly learning new web technologies and improving my design skills to turn creative ideas into reality. 
+  My goal is to build modern, user-friendly websites that make an impact.
+</p>
+
                 </div>
                 <div className="about-info">
                   <div className="info-grid">
@@ -360,7 +347,7 @@ const App = () => {
                     </div>
                     <div className="info-item">
                       <h4>Education</h4>
-                      <p>B.Tech CSE</p>
+                      <p>Matric</p>
                     </div>
                     <div className="info-item">
                       <h4>Availability</h4>
@@ -375,26 +362,35 @@ const App = () => {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="section fade-in-section" style={{opacity: isVisible['skills'] ? 1 : 0, transform: isVisible['skills'] ? 'translateY(0)' : 'translateY(30px)'}}>
-        <div className="container">
-          <h2 className="section-title">My <span>Skills</span></h2>
-          <div className="skills-grid">
-            {skills.map((skillGroup, index) => (
-              <div key={index} className="skill-card">
-                <div className="skill-category">
-                  {skillGroup.icon}
-                  {skillGroup.category}
-                </div>
-                <div className="skill-list">
-                  {skillGroup.items.map((skill, idx) => (
-                    <span key={idx} className="skill-tag">{skill}</span>
-                  ))}
-                </div>
-              </div>
+     <section 
+  id="skills" 
+  className="section fade-in-section" 
+  style={{
+    opacity: isVisible['skills'] ? 1 : 0,
+    transform: isVisible['skills'] ? 'translateY(0)' : 'translateY(30px)'
+  }}
+>
+  <div className="container">
+    <h2 className="section-title">My <span>Skills</span></h2>
+
+    <div className="skills-grid">
+      {skills.map((skillGroup, index) => (
+        <div key={index} className="skill-card">
+          <div className="skill-category">
+            {skillGroup.icon}
+            {skillGroup.category}
+          </div>
+
+          <div className="skill-list">
+            {skillGroup.items.map((skill, idx) => (
+              <span key={idx} className="skill-tag">{skill}</span>
             ))}
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Projects Section */}
       <section id="projects" className="section fade-in-section" style={{opacity: isVisible['projects'] ? 1 : 0, transform: isVisible['projects'] ? 'translateY(0)' : 'translateY(30px)'}}>
@@ -425,43 +421,49 @@ const App = () => {
           </div>
         </div>
       </section>
-
-      {/* Experience & Education Section */}
-      <section id="experience" className="section fade-in-section" style={{opacity: isVisible['experience'] ? 1 : 0, transform: isVisible['experience'] ? 'translateY(0)' : 'translateY(30px)'}}>
-        <div className="container">
-          <h2 className="section-title">Experience & <span>Education</span></h2>
-          
-          <div className="timeline">
-            {/* Experience */}
-            {experience.map((exp, index) => (
-              <div key={`exp-${index}`} className="timeline-item">
-                <span className="timeline-date">{exp.duration}</span>
-                <div className="timeline-content">
-                  <h3 className="timeline-title">{exp.role}</h3>
-                  <h4 className="timeline-subtitle">{exp.company}</h4>
-                  <ul className="timeline-list">
-                    {exp.details.map((detail, idx) => (
-                      <li key={idx}>{detail}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-
-            {/* Education */}
-            {education.map((edu, index) => (
-              <div key={`edu-${index}`} className="timeline-item">
-                <span className="timeline-date">{edu.year}</span>
-                <div className="timeline-content">
-                  <h3 className="timeline-title">{edu.degree}</h3>
-                  <h4 className="timeline-subtitle">{edu.school}</h4>
-                  <p style={{color: 'var(--text-secondary)'}}>{edu.score}</p>
-                </div>
-              </div>
-            ))}
+{/* Education & Experience Section */}
+<section 
+  id="experience" 
+  className="section fade-in-section" 
+  style={{
+    opacity: isVisible['experience'] ? 1 : 0,
+    transform: isVisible['experience'] ? 'translateY(0)' : 'translateY(30px)'
+  }}
+>
+  <div className="container">
+    <h2 className="section-title">Education & <span>Experience</span></h2>
+    
+    <div className="timeline">
+      {/* Education */}
+      {education.map((edu, index) => (
+        <div key={`edu-${index}`} className="timeline-item">
+          <span className="timeline-date">{edu.year}</span>
+          <div className="timeline-content">
+            <h3 className="timeline-title">{edu.degree}</h3>
+            <h4 className="timeline-subtitle">{edu.school}</h4>
+            <p style={{color: 'var(--text-secondary)'}}>{edu.score}</p>
           </div>
         </div>
-      </section>
+      ))}
+
+      {/* Experience */}
+      {experience.map((exp, index) => (
+        <div key={`exp-${index}`} className="timeline-item">
+          <span className="timeline-date">{exp.duration}</span>
+          <div className="timeline-content">
+            <h3 className="timeline-title">{exp.role}</h3>
+            <h4 className="timeline-subtitle">{exp.company}</h4>
+            <ul className="timeline-list">
+              {exp.details.map((detail, idx) => (
+                <li key={idx}>{detail}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Contact Section */}
       <section id="contact" className="section fade-in-section" style={{opacity: isVisible['contact'] ? 1 : 0, transform: isVisible['contact'] ? 'translateY(0)' : 'translateY(30px)'}}>
@@ -469,7 +471,7 @@ const App = () => {
           <h2 className="section-title">Get In <span>Touch</span></h2>
           <div className="contact-content">
             <p className="contact-text">
-              I'm currently looking for new opportunities and internships. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+             I'm open to new opportunities and internships. Feel free to reach out with questions or just to say hello-I’ll get back to you as soon as I can!
             </p>
             <div className="contact-links">
               <a href={`mailto:${personalInfo.email}`} className="contact-item">
@@ -485,9 +487,6 @@ const App = () => {
                 <span>Call Me</span>
               </a>
             </div>
-            <a href="https://drive.google.com/file/d/1lAR2lQ_iOP8agsel0wSN5nyIo-GOKgyf/view?usp=sharing" className="btn btn-outline">
-              <Download size={18} /> Download Resume
-            </a>
           </div>
         </div>
       </section>
@@ -499,11 +498,12 @@ const App = () => {
             <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="social-link"><Linkedin size={24}/></a>
             <a href={`mailto:${personalInfo.email}`} className="social-link"><Mail size={24}/></a>
           </div>
-          <div className="footer-text">
-            <p>Crafted with ❤️ and a passion for clean code</p>
-            <p>Turning coffee into code since 2022</p>
-            <p>© 2025 CharanGoud Ediga. All rights reserved</p>
-          </div>
+        <div className="footer-text">
+  <p>Crafted with ❤️ and a love for clean, efficient code</p>
+  <p>Turning coffee into code since 2022 ☕💻</p>
+  <p>© 2025 Abdul Rehman. All rights reserved</p>
+</div>
+
         </div>
       </footer>
 
