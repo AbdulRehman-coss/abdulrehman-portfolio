@@ -351,7 +351,7 @@ const personalInfo = {
                     </div>
                     <div className="info-item">
                       <h4>Availability</h4>
-                      <p style={{color: '#4ade80'}}>Open for Internships</p>
+                      <p style={{color: '#4ade80'}}>Open for work</p>
                     </div>
                   </div>
                 </div>
