@@ -1,5 +1,5 @@
 
-# Charan Goud — Portfolio (React + Vite)
+# Abdul Rehman — Portfolio (React + Vite)
 
 This repository is a personal portfolio website built with React and Vite. It showcases projects, skills, experience, education, and a contact section — wrapped in a modern, animated UI with a lightweight interactive background.
 
@@ -27,7 +27,7 @@ If you're working on this project locally, the sections below explain how the pr
 Open a terminal in the project root and run (PowerShell / Windows):
 
 ```powershell
-cd "c:\Users\chara\OneDrive\Desktop\Charan New Portfolio\portfolio"
+cd "D:\Desktop\portfolio.me\Charan-New-Portfolio>"
 npm install
 npm run dev
 ```
