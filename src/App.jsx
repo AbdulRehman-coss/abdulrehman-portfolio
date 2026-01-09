@@ -479,6 +479,8 @@ const personalInfo = {
                   <Mail size={32} />
                 </div>
                 <span>Email Me</span>
+                <span>my bro</span>
+                
               </a>
               <a href={`tel:${personalInfo.phone}`} className="contact-item">
                 <div className="contact-icon-box">
